@@ -8,3 +8,5 @@ public class Shredder : MonoBehaviour {
 		Destroy(col.gameObject);
 	}
 }
+
+//<>\n

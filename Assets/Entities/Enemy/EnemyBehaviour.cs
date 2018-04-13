@@ -43,9 +43,9 @@ public class EnemyBehaviour : MonoBehaviour {
 		Vector3 beam1 = new Vector3(transform.position.x-0.5f,transform.position.y-0.2f); 
 		Vector3 beam2 = new Vector3(transform.position.x+0.5f,transform.position.y-0.2f);
 		GameObject laserBeam1 = Instantiate(projectile,beam1,Quaternion.identity) as GameObject;
-		laserBeam1.rigidbody2D.velocity = new Vector3(0f, -projectileLaserSpeed,0f);
+		laserBeam1.GetComponent<Rigidbody2D>().velocity = new Vector3(0f, -projectileLaserSpeed,0f);
 		GameObject laserBeam2 = Instantiate(projectile,beam2,Quaternion.identity) as GameObject;
-		laserBeam2.rigidbody2D.velocity = new Vector3(0f, -projectileLaserSpeed,0f);
+		laserBeam2.GetComponent<Rigidbody2D>().velocity = new Vector3(0f, -projectileLaserSpeed,0f);
 		AudioSource.PlayClipAtPoint(fireSound, transform.position, 0.007f);
 	}
 	

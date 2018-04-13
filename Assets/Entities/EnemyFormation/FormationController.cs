@@ -9,6 +9,8 @@ public class FormationController : MonoBehaviour {
 	public float speed = 5f;
 	public float spawnDelay = 0.5f;
 	
+	public AudioClip flySound;
+	
 	
 	private float xMax;
 	private float xMin;
@@ -49,6 +51,7 @@ public class FormationController : MonoBehaviour {
 		if (freePosition) {
 		GameObject enemy = Instantiate(enemyPrefab,freePosition.position, Quaternion.identity) as GameObject;
 		enemy.transform.parent = freePosition;
+			AudioSource.PlayClipAtPoint(flySound,transform.position, 0.001f);
 		}
 		if (NextFreePosition()) {
 		Invoke ("SpawnUntilFull", spawnDelay);

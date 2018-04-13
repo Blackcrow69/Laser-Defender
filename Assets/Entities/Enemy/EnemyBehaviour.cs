@@ -1,17 +1,23 @@
-﻿using UnityEngine;
+﻿	using UnityEngine;
 using System.Collections;
 
 public class EnemyBehaviour : MonoBehaviour {
 
 	public GameObject projectile;
+	public GameObject exploPrefab;
 	public float projectileLaserSpeed;
 	public float health = 150f;
 	public float shotsPerSecond = 0.5f;
 	public int scoreValue = 150;
 	
+	public AudioClip fireSound;
+	public AudioClip deathSound;
+	
+	private ScoreKeeper scoreKeeper;
+	
 	
 	void Start () {
-		GameObject.Find("Score").GetComponent<ScoreKeeper>();
+		scoreKeeper =  GameObject.Find("Score").GetComponent<ScoreKeeper>();
 	}
 
 	// Use this for initialization
@@ -21,9 +27,16 @@ public class EnemyBehaviour : MonoBehaviour {
 			health -= laser.getDamage();
 			laser.Hit();
 			if (health <= 0) {
-				Destroy (gameObject);
+				Die();
 			}
 		}
+	}
+	
+	void Die() {
+		GameObject explo = Instantiate(exploPrefab,transform.position, Quaternion.identity) as GameObject;
+		Destroy (gameObject);
+		scoreKeeper.Score(scoreValue);
+		AudioSource.PlayClipAtPoint(deathSound,transform.position,0.007f);
 	}
 	
 	void Fire() {
@@ -33,6 +46,7 @@ public class EnemyBehaviour : MonoBehaviour {
 		laserBeam1.rigidbody2D.velocity = new Vector3(0f, -projectileLaserSpeed,0f);
 		GameObject laserBeam2 = Instantiate(projectile,beam2,Quaternion.identity) as GameObject;
 		laserBeam2.rigidbody2D.velocity = new Vector3(0f, -projectileLaserSpeed,0f);
+		AudioSource.PlayClipAtPoint(fireSound, transform.position, 0.007f);
 	}
 	
 	void Update () {

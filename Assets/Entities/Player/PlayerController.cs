@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour {
 	public float fireRate = 0.2f;
 	public float health = 250f;
 	
+	public AudioClip fireSound;
+	public AudioClip deathSound;
+	
 	float xMin = -5f;
 	float xMax = 5f;
 	
@@ -37,6 +40,7 @@ public class PlayerController : MonoBehaviour {
 		GameObject laserBeam2 = Instantiate (projectileLaser, beam2, Quaternion.identity) as GameObject;
 		laserBeam1.rigidbody2D.velocity = new Vector3(0f, projectileLaserSpeed,0f);
 		laserBeam2.rigidbody2D.velocity = new Vector3(0f, projectileLaserSpeed,0f);
+		AudioSource.PlayClipAtPoint(fireSound, transform.position,0.025f);
 	}
 	
 	
@@ -67,6 +71,9 @@ public class PlayerController : MonoBehaviour {
 			laser.Hit();
 			if (health <= 0) {
 				Destroy (gameObject);
+				AudioSource.PlayClipAtPoint(deathSound,transform.position,0.007f);
+				LevelManager man = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+				man.LoadLevel("Win Screen");
 			}
 		}
 	}
